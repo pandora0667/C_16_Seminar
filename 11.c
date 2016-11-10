@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define SIZE 100
 
@@ -25,7 +26,7 @@ int main()
 	while(1)
 	{
 		printMenu();
-		scanf("%d", num); 
+		scanf("%d", &num); 
 
 		switch(num)
 		{
@@ -77,7 +78,7 @@ void addLibrary(BOOK library[], int count) // 기록
 void printMenu() // 메뉴 
 {
 	printf("\n\n----------도서관리 프로그램 v1.0----------\n\n");
-	printf(" 1. 추가\n 2. 출력\n 3. 검색\n "); 
+	printf(" 1. 추가\n 2. 출력\n 3. 검색\n 4. 나가기\n "); 
 }
 
 void searchLibrary(BOOK library[], int count) // 검색 
@@ -87,27 +88,28 @@ void searchLibrary(BOOK library[], int count) // 검색
 
 	fflush(stdin); 
 
-	printf("제목 : "); 
+	printf("\n제목 : "); 
 	scanf("%s", tmpTitle); 
 
 	for(i=0; i<count; i++)
 	{
 		if(strcmp(library[i].title, tmpTitle) == 0)
 			printf("출판사는 %s \n", library[i].publisher);  
+		return;
 	}
 	
-	printf("존재하지 않는 도서 입니다.\n");
+	printf("\n존재하지 않는 도서 입니다.\n");
 }
 void printLibrary(BOOK library[], int count) // 출력
 {
 	int i; 
 
 	fflush(stdin);
-
+	printf("\n");
 	for(i=0; i<count; i++)
 	{
 		printf("제목 : %s\n", library[i].title);
 		printf("저자 : %s\n", library[i].writer);
-		printf("출판사 : %s\n", library[i].publisher);
+		printf("출판사 : %s\n\n", library[i].publisher);
 	}
 }
