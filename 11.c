@@ -1,118 +1,113 @@
-//
-//
+//C_express 16_11
+//Creative By LEE 
+
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
 #define SIZE 100
-typedef struct person { // 연락처를 구조체로 표현한다.
-	char name[SIZE]; // 이름
-	char address[SIZE]; // 주소
-	char mobilephone[SIZE]; // 휴대폰
-	char desc[SIZE]; // 특징
-} PERSON;
 
-void  menu();
-PERSON get_record();
-void print_record(PERSON data);
-void add_record(FILE *fp);
-void search_record(FILE *fp);
+typedef struct BOOK { 
+	char title[SIZE];
+	char writer[SIZE];
+	char publisher[SIZE];
+} BOOK;
 
-int main(void) 
+void addLibrary(BOOK library[], int count); // 기록
+void printMenu(); // 메뉴 
+void searchLibrary(BOOK library[], int count); // 검색 
+void printLibrary(BOOK library[], int count); // 출력 
+
+int main()
 {
-	FILE *fp;
-	int select;
+	int num, count = 0; 
+	BOOK library[SIZE]; 
 
-	if( (fp = fopen("address.dat", "a+")) == NULL ) 
+	while(1)
 	{
-		fprintf(stderr,"입력을 위한 파일을 열 수 없습니다");
-		exit(1);
-	}
+		printMenu();
+		scanf("%d", num); 
 
-	while(1) 
-	{
-		menu();
-	 	printf("정수값을 입력하시오: "); 
-	 	scanf("%d",&select);
-	 
-		switch(select) 
+		switch(num)
 		{
-	 		case 1: 
-				add_record(fp); 
-				break;
-	 		case 2: 
-				search_record(fp); 
-				break; 
-	 		case 3: 
-				return 0;
-	 	}
-	}
-	
-	fclose(fp); 
-	return 0;
-}
+			case 1 :
+				{
+					addLibrary(library, count); 
+					count++; 
+					break; 
+				}
 
-PERSON get_record()
-{
-	PERSON data;
-	fflush(stdin);
-	
-	printf("이름"); 
-	scanf("%s", data.name); 
-	
-	printf("주소"); 
-	scanf("%s", data.address);
-	
-	printf("휴대폰"); 
-	scanf("%s", data.mobilephone); 
-	
-	printf("특징"); 
-	scanf("%s", data.desc);
-	
-	return data;
-}
+			case 2 :
+				{
+					printLibrary(library, count); 
+					break;
+				}
 
-void print_record(PERSON data)
-{
-	printf("이름\n", data.name); 
-	printf("주소\n", data.address);	
-	printf("휴대폰\n", data.mobilephone); 
-	printf("특징\n", data.desc);
-}
+			case 3 :
+				{
+					searchLibrary(library, count); 
+					break; 
+				}
 
-void menu()
-{
-	printf("====================\n");
-	printf(" 1. 추가\n 2. 검색\n  3. 종료\n");
-	printf("====================\n");
-}
+			case 4 : 
+				return -1; 
 
-void add_record(FILE *fp)
-{
-	PERSON data;
-	data = get_record(); 
-	fseek(fp, 0, SEEK_END); 
-	fwrite(&data, sizeof(data), 1, fp);
-}
-
-void search_record(FILE *fp)
-{
-	char name[SIZE];
-	PERSON data;
-	
-	fseek(fp, 0, SEEK_SET); // 파일의 처음으로 간다
-	fflush(stdin);
-	
-	printf("탐색하고자 하는 사람의 이름");
-	scanf("%s", name); // 이름을 입력받는다
-	
-	while(!feof(fp))
-	{
-		fread(&data, sizeof(data), 1, fp); 
-		if( strcmp(data.name, name) == 0 )
-		{
-			print_record(data); 
-				break;
+			default :
+				printf("다시 입력하세요!!\n\n"); 
 		}
+	}
+
+	return 0; 
+} 
+
+void addLibrary(BOOK library[], int count) // 기록
+{
+	int type; 
+	fflush(stdin); 
+
+	printf(" 도서 이름 : "); 
+	scanf("%s", library[count].title); 
+
+	printf(" 저자 : "); 
+	scanf("%s", library[count].writer); 
+
+	printf(" 출판사 : "); 
+	scanf("%s", library[count].publisher); 
+}
+
+void printMenu() // 메뉴 
+{
+	printf("\n\n----------도서관리 프로그램 v1.0----------\n\n");
+	printf(" 1. 추가\n 2. 출력\n 3. 검색\n "); 
+}
+
+void searchLibrary(BOOK library[], int count) // 검색 
+{
+	int i; 
+	char tmpTitle[SIZE];
+
+	fflush(stdin); 
+
+	printf("제목 : "); 
+	scanf("%s", tmpTitle); 
+
+	for(i=0; i<count; i++)
+	{
+		if(strcmp(library[i].title, tmpTitle) == 0)
+			printf("출판사는 %s \n", library[i].publisher);  
+	}
+	
+	printf("존재하지 않는 도서 입니다.\n");
+}
+void printLibrary(BOOK library[], int count) // 출력
+{
+	int i; 
+
+	fflush(stdin);
+
+	for(i=0; i<count; i++)
+	{
+		printf("제목 : %s\n", library[i].title);
+		printf("저자 : %s\n", library[i].writer);
+		printf("출판사 : %s\n", library[i].publisher);
 	}
 }
