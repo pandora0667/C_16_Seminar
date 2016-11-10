@@ -20,13 +20,15 @@ int main()
 
 	if((fp2 = fopen("binary2.bin", "wb")) == NULL)
 	{
-		fprintf(stderr, "No File\n\n");
+		fprintf(stderr, "No Write\n\n");
 		exit(1);
 	}
 
 	while((count = fread(buffer, sizeof(char), SIZE, fp1)) != 0)
-		fwrite(buffer, sizeof(char), SIZE, fp2);
-
+		fwrite(buffer, sizeof(char), count, fp2);
+	
+	fclose(fp1);
+	fclose(fp2);
 	return 0; 
 }
 		

@@ -94,8 +94,10 @@ void searchLibrary(BOOK library[], int count) // 검색
 	for(i=0; i<count; i++)
 	{
 		if(strcmp(library[i].title, tmpTitle) == 0)
+		{
 			printf("출판사는 %s \n", library[i].publisher);  
-		return;
+			return;
+		}
 	}
 	
 	printf("\n존재하지 않는 도서 입니다.\n");

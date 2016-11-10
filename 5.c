@@ -16,7 +16,7 @@ int main()
 
 	struct student score;
 	int total; 
-
+	char buffer[100];
 
 	if((fp1 = fopen("studentScore.txt", "r")) == NULL) 
 	{
@@ -29,15 +29,21 @@ int main()
 		fprintf(stderr, "파일 생성 실패\n\n"); 
 		exit(1);
 	}
-
+	
+	fgets(buffer, 100, fp1); 
+//sscanf(string,~)
 	while(!feof(fp1))
 	{
-		fscanf(fp1, "%s %d %d %d", score.name, &score.korean, &score.math, &score.english);
+		if( fscanf(fp1, "%s %d %d %d", score.name, &score.korean, &score.math, &score.english) < 4 )
+			continue; 
 		total = (score.korean + score.math + score.english); 
-
+		 
 		score.average = (double)(total/3);
 		fprintf(fp2, "%s %.2f \n", score.name, score.average); 
 	}
+
+	fclose(fp1);
+	fclose(fp2);
 
 	return 0;
 } 
