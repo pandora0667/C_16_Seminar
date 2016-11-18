@@ -30,5 +30,9 @@ int main(int argc, char *argv[])
 		fputs(buffer, fp3);
 	
 	printf("%s와 %s를 합하여 %s를 만들었습니다. \n\n", argv[1], argv[2], argv[3]);
+
+	fclose(fp1);
+	fclose(fp2);
+	fclose(fp3);
 	return 0; 
 }
