@@ -23,11 +23,14 @@ int main()
 
 	while(1)
 	{
+		char *p = gets(string); 
+		if(p == NULL)
+			break;
 		scanf("%s", string); 
 		fprintf(fp, "%s", string);
 	
-		if(fgets(string, SIZE, fp) == 0)
-			break;
+		//if(fgets(string, SIZE, fp) == 0)
+		//	break;
 	}
 
 	fclose(fp);
