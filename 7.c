@@ -23,7 +23,7 @@ int main()
 
 	while(1)
 	{
-		char *p = gets(string); 
+		char *p = fgets(string, SIZE, fp); 
 		if(p == NULL)
 			break;
 		scanf("%s", string); 
